@@ -4,67 +4,215 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Adilabad Depot Dashboard</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
 <style>
 :root { --brand:#1565c0; --brandDark:#0d47a1; }
-body{font-family:Poppins,sans-serif;margin:0;background:#f3f6fa;color:#333}
-.wrap{max-width:900px;width:100%;margin:auto;padding:10px}
-.updated{position:sticky;top:0;left:0;background:#f3f6fa;font-size:12px;color:#555;padding:6px 8px;z-index:20;border-bottom:1px solid #e0e0e0;text-align:left;}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:10px}
-.card{background:#fff;border-radius:12px;padding:12px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.card-title{font-size:13px;color:#666}
-.card-value{font-size:18px;color:var(--brand);min-height:20px}
-.btns{display:flex;justify-content:center;gap:10px;margin:15px 0}
-button{background:var(--brand);color:#fff;border:none;padding:10px 18px;border-radius:8px;font-size:14px;cursor:pointer}
-button:hover{background:var(--brandDark)}
-.tablebox{background:#fff;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.1);overflow:hidden;max-height:0;opacity:0;padding:0 10px;transition:max-height .35s ease,opacity .25s ease,padding .35s ease}
-.tablebox.open{max-height:65vh;opacity:1;padding:10px;overflow:auto}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{padding:10px;border-bottom:1px solid #eee;text-align:left;white-space:nowrap}
-thead{background:#f1f5f9;position:sticky;top:0}
-.row-total{background:#eaf4ff}
-.row-grand{background:#e3f2fd;font-weight:600}
-.row-header{background:#f5f5f5;font-weight:600}
-.dl-menu{position:fixed;top:10px;right:10px;z-index:1000}
-.dl-btn{display:inline-flex;align-items:center;justify-content:center;background:#fff;color:#1565c0;border:none;border-radius:50%;width:42px;height:42px;font-size:18px;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.15);transition:all .25s ease}
-.dl-btn:hover{background:#f1f5f9;transform:scale(1.08)}
-.dl-list{position:absolute;right:0;margin-top:10px;background:rgba(255,255,255,.95);border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,.2);min-width:220px;padding:6px;display:none}
-.dl-list.open{display:block}
-.dl-item{display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;color:#0d47a1;text-decoration:none;font-size:14px}
-.dl-item:hover{background:rgba(240,244,255,.9);transform:translateX(3px)}
-.dl-icon i.fa-file-lines{color:#1565c0;font-size:18px}
+
+body {
+  font-family:Poppins,sans-serif;
+  margin:0;
+  background:#f3f6fa;
+  color:#333;
+  padding-bottom:70px;
+}
+
+/* Transparent Netflix-style header */
+.header {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:15px 20px;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(15px);
+  -webkit-backdrop-filter:blur(15px);
+  transition:background .4s ease, box-shadow .4s ease;
+  z-index:100;
+}
+.header.scrolled {
+  background:rgba(255,255,255,0.9);
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+
+.header img {
+  height:52px;
+  width:auto;
+}
+
+.titlebox {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  line-height:1.1;
+}
+
+.telugu {
+  font-size:14px;
+  color:#000;
+  letter-spacing:0.3px;
+  margin-bottom:2px;
+}
+
+.english {
+  font-size:17px;
+  color:#000;
+  font-weight:700;
+  letter-spacing:0.5px;
+}
+
+.updated {
+  font-size:12px;
+  color:#444;
+  margin-top:85px;
+  margin-bottom:10px;
+  padding:0 20px;
+}
+
+/* Cards */
+.wrap { max-width:900px; margin:auto; padding:10px; }
+.cards {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:10px;
+  margin-top:5px;
+}
+.card {
+  background:#fff;
+  border-radius:12px;
+  padding:12px;
+  text-align:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+.card:hover {
+  transform:translateY(-5px);
+  box-shadow:0 4px 14px rgba(0,0,0,.15);
+}
+.card-title { font-size:13px; color:#666; }
+.card-value { font-size:18px; color:var(--brand); font-weight:600; }
+
+/* Toggle Button */
+.btns { display:flex; justify-content:center; margin:15px 0; }
+button {
+  background:var(--brand);
+  color:#fff;
+  border:none;
+  padding:10px 18px;
+  border-radius:8px;
+  font-size:14px;
+  cursor:pointer;
+  transition:background .3s ease;
+}
+button:hover { background:var(--brandDark); }
+
+/* Table */
+.tablebox {
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 2px 10px rgba(0,0,0,.1);
+  overflow:hidden;
+  max-height:0;
+  opacity:0;
+  padding:0 10px;
+  transition:max-height .35s ease,opacity .25s ease,padding .35s ease;
+}
+.tablebox.open {
+  max-height:65vh;
+  opacity:1;
+  padding:10px;
+  overflow:auto;
+}
+table { width:100%; border-collapse:collapse; font-size:13px; }
+th,td {
+  padding:10px;
+  border-bottom:1px solid #eee;
+  text-align:left;
+  white-space:nowrap;
+}
+thead { background:#f1f5f9; position:sticky; top:0; }
+.row-total { background:#eaf4ff; }
+.row-grand { background:#e3f2fd; font-weight:600; }
+.row-header { background:#f5f5f5; font-weight:600; }
+
+/* Bottom Navigation */
+.bottom-nav {
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  backdrop-filter:blur(8px);
+  background:rgba(255,255,255,0.85);
+  box-shadow:0 -2px 8px rgba(0,0,0,0.1);
+  padding:8px 0;
+  z-index:1000;
+}
+.nav-item {
+  text-align:center;
+  color:#0d47a1;
+  text-decoration:none;
+  font-size:12px;
+  flex:1;
+  transition:color .3s ease;
+}
+.nav-item i {
+  display:block;
+  font-size:18px;
+  margin-bottom:3px;
+}
+.nav-item:hover { color:#1565c0; }
 </style>
 </head>
+
 <body>
-<div class="dl-menu">
-  <button id="dlToggle" class="dl-btn" title="Downloads">
-    <i class="fa-solid fa-download"></i>
-  </button>
-  <div id="dlList" class="dl-list">
-    <a class="dl-item" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vS1obFtOKyH7oHx4rkMxtd45pFpDZpIu4i46SIJd0T9m-p4lpHxqjtqeIuUU4yMsYNCUBeneTFanjVP/pub?gid=1013668253&single=true&output=pdf" target="_blank">
-      <span class="dl-icon"><i class="fa-solid fa-file-lines"></i></span> Abstract
-    </a>
-    <a class="dl-item" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vS1obFtOKyH7oHx4rkMxtd45pFpDZpIu4i46SIJd0T9m-p4lpHxqjtqeIuUU4yMsYNCUBeneTFanjVP/pub?gid=974670141&single=true&output=pdf" target="_blank">
-      <span class="dl-icon"><i class="fa-solid fa-file-lines"></i></span> Challan
-    </a>
-    <a class="dl-item" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vS1obFtOKyH7oHx4rkMxtd45pFpDZpIu4i46SIJd0T9m-p4lpHxqjtqeIuUU4yMsYNCUBeneTFanjVP/pub?gid=1889179741&single=true&output=pdf" target="_blank">
-      <span class="dl-icon"><i class="fa-solid fa-file-lines"></i></span> Week Report
-    </a>
+<!-- Transparent Header -->
+<div class="header" id="header">
+  <img src="https://raw.githubusercontent.com/saikiranch123/Tgbcl/main/logo.png" alt="Logo">
+  <div class="titlebox">
+    <div class="telugu">అదిలాబాద్ డిపో</div>
+    <div class="english">ADILABAD DEPOT</div>
   </div>
 </div>
+
+<!-- Last Updated -->
+<div id="updated" class="updated">Loading update time...</div>
+
+<!-- Main Content -->
 <div class="wrap">
-  <div id="updated" class="updated">Loading update time...</div>
   <div id="cards" class="cards"></div>
   <div class="btns"><button id="toggle">Circle Wise ▼</button></div>
   <div id="tablebox" class="tablebox"><p style="text-align:center;color:#1565c0;">Loading data...</p></div>
 </div>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+  <a href="#" class="nav-item" id="home"><i class="fa-solid fa-house"></i>Home</a>
+  <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vS1obFtOKyH7oHx4rkMxtd45pFpDZpIu4i46SIJd0T9m-p4lpHxqjtqeIuUU4yMsYNCUBeneTFanjVP/pub?gid=1013668253&single=true&output=pdf" class="nav-item" target="_blank"><i class="fa-solid fa-file-lines"></i>Abstract</a>
+  <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vS1obFtOKyH7oHx4rkMxtd45pFpDZpIu4i46SIJd0T9m-p4lpHxqjtqeIuUU4yMsYNCUBeneTFanjVP/pub?gid=974670141&single=true&output=pdf" class="nav-item" target="_blank"><i class="fa-solid fa-file-invoice"></i>Challan</a>
+  <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vS1obFtOKyH7oHx4rkMxtd45pFpDZpIu4i46SIJd0T9m-p4lpHxqjtqeIuUU4yMsYNCUBeneTFanjVP/pub?gid=1889179741&single=true&output=pdf" class="nav-item" target="_blank"><i class="fa-solid fa-calendar-week"></i>Week</a>
+</div>
+
 <script>
 document.addEventListener("DOMContentLoaded",()=>{
   const $u=document.getElementById("updated"),
         $cards=document.getElementById("cards"),
         $table=document.getElementById("tablebox"),
-        $btn=document.getElementById("toggle");
+        $btn=document.getElementById("toggle"),
+        header=document.getElementById("header");
+
+  // Scroll header effect
+  window.addEventListener("scroll",()=>{
+    if(window.scrollY>20){header.classList.add("scrolled");}
+    else{header.classList.remove("scrolled");}
+  });
 
   const csvUrl="https://docs.google.com/spreadsheets/d/e/2PACX-1vS1obFtOKyH7oHx4rkMxtd45pFpDZpIu4i46SIJd0T9m-p4lpHxqjtqeIuUU4yMsYNCUBeneTFanjVP/pub?gid=1013668253&single=true&range=A2:G19&output=csv";
 
@@ -89,9 +237,11 @@ document.addEventListener("DOMContentLoaded",()=>{
       const res=await fetch(csvUrl+"&t="+Date.now(),{cache:'no-store'});
       const text=await res.text();
       const rows=parseCSV(text);
+
       const time=rows?.[0]?.[0]||"--";
       const date=rows?.[0]?.[1]||"--";
       $u.textContent=`Last Updated: ${date} — ${time}`;
+
       const labels=["Indents","Part Bottle","IML","Beer","Total","Value"];
       const summary=rows?.[2]||[];
       $cards.innerHTML=labels.map((t,i)=>`
@@ -99,6 +249,7 @@ document.addEventListener("DOMContentLoaded",()=>{
           <div class="card-title">${t}</div>
           <div class="card-value">${summary[i]??""}</div>
         </div>`).join("");
+
       const headers=rows?.[3]||["Circle","Challan(S)","Amount","Indents(S)","Amount","Complete(S)","Amount"];
       let html=`<table><thead><tr>${headers.slice(0,7).map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>`;
       for(let i=4;i<rows.length;i++){
@@ -121,10 +272,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 
   let open=false;
   $btn.onclick=()=>{open=!open;$table.classList.toggle("open",open);$btn.textContent=open?"Circle Wise ▲":"Circle Wise ▼";};
-
-  const toggle=document.getElementById('dlToggle'), list=document.getElementById('dlList');
-  toggle.onclick=(e)=>{e.stopPropagation();list.classList.toggle('open');};
-  document.addEventListener('click',(e)=>{if(!list.contains(e.target)&&e.target!==toggle)list.classList.remove('open');});
+  document.getElementById("home").onclick=(e)=>{e.preventDefault();window.scrollTo({top:0,behavior:"smooth"});};
 
   load();
 });
