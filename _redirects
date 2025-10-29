@@ -1,0 +1,5 @@
+# Force HTTPS redirect
+http://* https://adilabaddepot.com/:splat 301!
+
+# Custom 404 page redirect
+/* /404.html 404
