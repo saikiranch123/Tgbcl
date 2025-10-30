@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Indents Dashboard</title>
+<title>Adilabad Depot Dashboard</title>
 
-<!-- Fonts & Icons -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
 <style>
 :root { --brand:#1565c0; --brandDark:#0d47a1; }
@@ -17,152 +16,266 @@ body {
   margin:0;
   background:#f3f6fa;
   color:#333;
-  display:flex;
-  justify-content:center;
+  padding-bottom:70px;
 }
 
-.wrap { max-width:900px; width:100%; padding:10px; }
-
-header {
+/* Transparent Netflix-style header */
+.header {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:15px 20px;
   position:fixed;
   top:0;
   left:0;
-  right:0;
-  background:rgba(255,255,255,0.25);
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-  box-shadow:0 2px 8px rgba(0,0,0,0.1);
-  padding:8px 16px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+  width:100%;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(15px);
+  -webkit-backdrop-filter:blur(15px);
+  transition:background .4s ease, box-shadow .4s ease;
   z-index:100;
 }
+.header.scrolled {
+  background:rgba(255,255,255,0.9);
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
 
-.logo-box { display:flex; align-items:center; gap:10px; }
-.logo-box img { height:38px; border-radius:8px; }
-.title { font-size:18px; color:var(--brandDark); }
+.header img {
+  height:52px;
+  width:auto;
+}
+
+.titlebox {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  line-height:1.1;
+}
+
+.telugu {
+  font-size:14px;
+  color:#000;
+  letter-spacing:0.3px;
+  margin-bottom:2px;
+}
+
+.english {
+  font-size:17px;
+  color:#000;
+  font-weight:700;
+  letter-spacing:0.5px;
+}
 
 .updated {
-  margin-top:70px;
   font-size:12px;
-  color:#555;
+  color:#444;
+  margin-top:85px;
+  margin-bottom:10px;
+  padding:0 20px;
 }
 
+/* Cards */
+.wrap { max-width:900px; margin:auto; padding:10px; }
 .cards {
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
-  gap:12px;
-  margin-top:10px;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:10px;
+  margin-top:5px;
 }
-
 .card {
-  background:white;
-  border-radius:16px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+  background:#fff;
+  border-radius:12px;
+  padding:12px;
   text-align:center;
-  padding:15px 10px;
-  transition:transform 0.3s ease;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  transition:transform .25s ease, box-shadow .25s ease;
 }
-.card:hover { transform:translateY(-4px); }
-.card h3 { margin:0; font-size:13px; color:var(--brandDark); }
-.card p { margin:5px 0 0; font-size:22px; color:var(--brand); font-weight:600; }
+.card:hover {
+  transform:translateY(-5px);
+  box-shadow:0 4px 14px rgba(0,0,0,.15);
+}
+.card-title { font-size:13px; color:#666; }
+.card-value { font-size:18px; color:var(--brand); font-weight:600; }
 
-footer {
+/* Toggle Button */
+.btns { display:flex; justify-content:center; margin:15px 0; }
+button {
+  background:var(--brand);
+  color:#fff;
+  border:none;
+  padding:10px 18px;
+  border-radius:8px;
+  font-size:14px;
+  cursor:pointer;
+  transition:background .3s ease;
+}
+button:hover { background:var(--brandDark); }
+
+/* Table */
+.tablebox {
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 2px 10px rgba(0,0,0,.1);
+  overflow:hidden;
+  max-height:0;
+  opacity:0;
+  padding:0 10px;
+  transition:max-height .35s ease,opacity .25s ease,padding .35s ease;
+}
+.tablebox.open {
+  max-height:65vh;
+  opacity:1;
+  padding:10px;
+  overflow:auto;
+}
+table { width:100%; border-collapse:collapse; font-size:13px; }
+th,td {
+  padding:10px;
+  border-bottom:1px solid #eee;
+  text-align:left;
+  white-space:nowrap;
+}
+thead { background:#f1f5f9; position:sticky; top:0; }
+.row-total { background:#eaf4ff; }
+.row-grand { background:#e3f2fd; font-weight:600; }
+.row-header { background:#f5f5f5; font-weight:600; }
+
+/* Bottom Navigation */
+.bottom-nav {
   position:fixed;
   bottom:0;
   left:0;
-  right:0;
-  background:rgba(255,255,255,0.85);
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
+  width:100%;
   display:flex;
   justify-content:space-around;
-  padding:8px 0;
-  border-top:1px solid #ddd;
-}
-
-footer a {
-  color:var(--brandDark);
-  text-decoration:none;
-  font-size:14px;
-  display:flex;
-  flex-direction:column;
   align-items:center;
+  backdrop-filter:blur(8px);
+  background:rgba(255,255,255,0.85);
+  box-shadow:0 -2px 8px rgba(0,0,0,0.1);
+  padding:8px 0;
+  z-index:1000;
 }
-footer a i { font-size:18px; margin-bottom:4px; }
-footer a.active { color:var(--brand); }
+.nav-item {
+  text-align:center;
+  color:#0d47a1;
+  text-decoration:none;
+  font-size:12px;
+  flex:1;
+  transition:color .3s ease;
+}
+.nav-item i {
+  display:block;
+  font-size:18px;
+  margin-bottom:3px;
+}
+.nav-item:hover { color:#1565c0; }
 </style>
 </head>
 
 <body>
-<header>
-  <div class="logo-box">
-    <img src="logo.png" alt="Logo">
-    <span class="title">Adilabad Depot / ఆదిలాబాద్ డిపో</span>
-  </div>
-</header>
-
-<div class="wrap">
-  <div class="updated">Last Updated: <span id="updateTime">Loading...</span></div>
-
-  <div class="cards">
-    <div class="card"><h3>Indents</h3><p id="indents">--</p></div>
-    <div class="card"><h3>Part Bottle</h3><p id="partbottle">--</p></div>
-    <div class="card"><h3>IML</h3><p id="iml">--</p></div>
-    <div class="card"><h3>Beer</h3><p id="beer">--</p></div>
-    <div class="card"><h3>Total</h3><p id="total">--</p></div>
-    <div class="card"><h3>Value</h3><p id="value">--</p></div>
+<!-- Transparent Header -->
+<div class="header" id="header">
+  <img src="https://raw.githubusercontent.com/saikiranch123/Tgbcl/main/logo.png" alt="Logo">
+  <div class="titlebox">
+    <div class="telugu">అదిలాబాద్ డిపో</div>
+    <div class="english">ADILABAD DEPOT</div>
   </div>
 </div>
 
-<footer>
-  <a href="#" class="active"><i class="fa-solid fa-house"></i>Home</a>
-  <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vS1obFtOKyH7oHx4rkMxtd45pFpDZpIu4i46SIJd0T9m-p4lpHxqjtqeIuUU4yMsYNCUBeneTFanjVP/pub?gid=1013668253&single=true&output=pdf" target="_blank"><i class="fa-solid fa-file-pdf"></i>Abstract</a>
-  <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vS1obFtOKyH7oHx4rkMxtd45pFpDZpIu4i46SIJd0T9m-p4lpHxqjtqeIuUU4yMsYNCUBeneTFanjVP/pub?gid=1889179741&single=true&output=pdf" target="_blank"><i class="fa-solid fa-file-pdf"></i>Challan</a>
-  <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vS1obFtOKyH7oHx4rkMxtd45pFpDZpIu4i46SIJd0T9m-p4lpHxqjtqeIuUU4yMsYNCUBeneTFanjVP/pub?gid=1889179741&single=true&output=pdf" target="_blank"><i class="fa-solid fa-calendar-week"></i>Week Report</a>
-</footer>
+<!-- Last Updated -->
+<div id="updated" class="updated">Loading update time...</div>
+
+<!-- Main Content -->
+<div class="wrap">
+  <div id="cards" class="cards"></div>
+  <div class="btns"><button id="toggle">Circle Wise ▼</button></div>
+  <div id="tablebox" class="tablebox"><p style="text-align:center;color:#1565c0;">Loading data...</p></div>
+</div>
+
+<!-- Bottom Navigation -->
+<div class="bottom-nav">
+  <a href="#" class="nav-item" id="home"><i class="fa-solid fa-house"></i>Home</a>
+  <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vS1obFtOKyH7oHx4rkMxtd45pFpDZpIu4i46SIJd0T9m-p4lpHxqjtqeIuUU4yMsYNCUBeneTFanjVP/pub?gid=1013668253&single=true&output=pdf" class="nav-item" target="_blank"><i class="fa-solid fa-file-lines"></i>Abstract</a>
+  <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vS1obFtOKyH7oHx4rkMxtd45pFpDZpIu4i46SIJd0T9m-p4lpHxqjtqeIuUU4yMsYNCUBeneTFanjVP/pub?gid=974670141&single=true&output=pdf" class="nav-item" target="_blank"><i class="fa-solid fa-file-invoice"></i>Challan</a>
+  <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vS1obFtOKyH7oHx4rkMxtd45pFpDZpIu4i46SIJd0T9m-p4lpHxqjtqeIuUU4yMsYNCUBeneTFanjVP/pub?gid=1889179741&single=true&output=pdf" class="nav-item" target="_blank"><i class="fa-solid fa-calendar-week"></i>Week</a>
+</div>
 
 <script>
-const apiURL = "https://script.google.com/macros/s/AKfycbzD-USTysDA1hEnm7ZOCIeew9Sa0hMdv8Eze04gYJ0Y7QGL9cDvOK28EBYtf28V4qpClA/exec";
+document.addEventListener("DOMContentLoaded",()=>{
+  const $u=document.getElementById("updated"),
+        $cards=document.getElementById("cards"),
+        $table=document.getElementById("tablebox"),
+        $btn=document.getElementById("toggle"),
+        header=document.getElementById("header");
 
-async function loadData() {
-  try {
-    const res = await fetch(apiURL);
-    const data = await res.json();
+  // Scroll header effect
+  window.addEventListener("scroll",()=>{
+    if(window.scrollY>20){header.classList.add("scrolled");}
+    else{header.classList.remove("scrolled");}
+  });
 
-    animateValue("indents", data.indents);
-    animateValue("partbottle", data.partbottle);
-    animateValue("iml", data.iml);
-    animateValue("beer", data.beer);
-    animateValue("total", data.total);
-    animateValue("value", data.value);
+  const csvUrl="https://docs.google.com/spreadsheets/d/e/2PACX-1vS1obFtOKyH7oHx4rkMxtd45pFpDZpIu4i46SIJd0T9m-p4lpHxqjtqeIuUU4yMsYNCUBeneTFanjVP/pub?gid=1013668253&single=true&range=A2:G19&output=csv";
 
-    document.getElementById("updateTime").textContent =
-      data.lastUpdated || new Date().toLocaleString();
-  } catch (e) {
-    console.error("Error loading data:", e);
+  function parseCSV(text){
+    const lines=text.trim().split(/\r?\n/);
+    return lines.map(line=>{
+      const out=[]; let cur='', inQ=false;
+      for(let i=0;i<line.length;i++){
+        const ch=line[i], nx=line[i+1];
+        if(ch==='"' && inQ && nx==='"'){cur+='"'; i++; continue;}
+        if(ch==='"'){inQ=!inQ; continue;}
+        if(ch===',' && !inQ){out.push(cur.trim()); cur=''; continue;}
+        cur+=ch;
+      }
+      out.push(cur.trim());
+      return out;
+    });
   }
-}
 
-function animateValue(id, end) {
-  const el = document.getElementById(id);
-  const start = 0;
-  const duration = 1500;
-  const range = end - start;
-  let startTime = null;
+  async function load(){
+    try{
+      const res=await fetch(csvUrl+"&t="+Date.now(),{cache:'no-store'});
+      const text=await res.text();
+      const rows=parseCSV(text);
 
-  function step(ts) {
-    if (!startTime) startTime = ts;
-    const progress = Math.min((ts - startTime) / duration, 1);
-    el.textContent = Math.floor(progress * range).toLocaleString();
-    if (progress < 1) requestAnimationFrame(step);
-    else el.textContent = end.toLocaleString();
+      const time=rows?.[0]?.[0]||"--";
+      const date=rows?.[0]?.[1]||"--";
+      $u.textContent=`Last Updated: ${date} — ${time}`;
+
+      const labels=["Indents","Part Bottle","IML","Beer","Total","Value"];
+      const summary=rows?.[2]||[];
+      $cards.innerHTML=labels.map((t,i)=>`
+        <div class="card">
+          <div class="card-title">${t}</div>
+          <div class="card-value">${summary[i]??""}</div>
+        </div>`).join("");
+
+      const headers=rows?.[3]||["Circle","Challan(S)","Amount","Indents(S)","Amount","Complete(S)","Amount"];
+      let html=`<table><thead><tr>${headers.slice(0,7).map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>`;
+      for(let i=4;i<rows.length;i++){
+        const r=rows[i]; if(!r || !r[0]) continue;
+        const label=(r[0]||"").toLowerCase();
+        let cls="";
+        if(label.includes("grand total")) cls="row-grand";
+        else if(label.includes("total")) cls="row-total";
+        else if(r[0] && !(r[1]||r[2]||r[3])) cls="row-header";
+        html+=`<tr class="${cls}">${r.slice(0,7).map(c=>`<td>${c??""}</td>`).join("")}</tr>`;
+      }
+      html+="</tbody></table>";
+      $table.innerHTML=html;
+    }catch(err){
+      console.error(err);
+      $u.textContent="Failed to load data.";
+      $table.innerHTML=`<p style='color:#c00;text-align:center;'>Could not read published CSV. Check range A2:G19.</p>`;
+    }
   }
-  requestAnimationFrame(step);
-}
 
-loadData();
+  let open=false;
+  $btn.onclick=()=>{open=!open;$table.classList.toggle("open",open);$btn.textContent=open?"Circle Wise ▲":"Circle Wise ▼";};
+  document.getElementById("home").onclick=(e)=>{e.preventDefault();window.scrollTo({top:0,behavior:"smooth"});};
+
+  load();
+});
 </script>
 </body>
 </html>
