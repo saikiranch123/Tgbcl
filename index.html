@@ -25,32 +25,36 @@
   background-repeat: repeat;
   background-position: center;
 }
-.yt-short-btn {
+
+ .yt-round-btn {
   position: fixed;
-  top: 75px; /* 👈 moved down so header won't overlap */
+  top: 70px; /* below header */
   right: 15px;
+
+  width: 42px;
+  height: 42px;
+
   background: #ff0000;
   color: white;
-  padding: 10px 12px;
-  border-radius: 30px;
-  font-size: 13px;
-  font-weight: bold;
-  text-decoration: none;
-  z-index: 9999;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
-  font-family: Arial, sans-serif;
+
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+
+  border-radius: 50%;
+  text-decoration: none;
+
+  font-size: 18px;
+
+  z-index: 9999;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+
+  transition: transform 0.2s ease, background 0.2s ease;
 }
 
-.yt-short-btn i {
-  font-size: 16px;
-}
-
-.yt-short-btn:hover {
+.yt-round-btn:hover {
   background: #cc0000;
-  transform: scale(1.05);
+  transform: scale(1.1);
 }
 /* Transparent Netflix-style header */
 .header {
@@ -209,10 +213,10 @@ thead { background:#f1f5f9; position:sticky; top:0; }
 
 
 <!-- 🔴 YouTube Shorts Button (TOP RIGHT) -->
-<a class="yt-short-btn" 
+<a class="yt-round-btn" 
    href="https://youtube.com/shorts/gZTEWw2dGVw?si=nDB1dvC_bffXb2mx" 
    target="_blank">
-  ▶ Watch Guide
+  <i class="fa-brands fa-youtube"></i>
 </a>
 <!-- Transparent Header -->
 <div class="header" id="header">
